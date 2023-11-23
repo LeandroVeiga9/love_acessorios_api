@@ -56,7 +56,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     if self.profile_image:     
       thumbnail_size = 120, 120
       image = Image.open(self.profile_image)
-      image.thumbnail(thumbnail_size, Image.ANTIALIAS)
+      image.thumbnail(thumbnail_size, Image.LANCZOS)
       thumb_name, thumb_extension = os.path.splitext(self.profile_image.name)
       thumb_extension = thumb_extension.lower()
       thumb_filename = thumb_name + '_thumb' + thumb_extension
