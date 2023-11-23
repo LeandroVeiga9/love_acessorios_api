@@ -2,11 +2,11 @@ from rest_framework.routers import SimpleRouter
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path
 
+from .views import register_view, login_view
+from .views import UsersViewSet
 
 router = SimpleRouter()
-
-from .views import register_view, login_view
-
+router.register('users', UsersViewSet)
 
 urlpatterns = [
   path('login/', login_view, name='login'),

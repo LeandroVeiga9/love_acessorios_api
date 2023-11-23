@@ -93,9 +93,9 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     ),
-    # 'DEFAULT_PAGINATION_CLASS': 'api.pagination.customPagination.CustomPagination',
+    'DEFAULT_PAGINATION_CLASS': 'api.pagination.customPagination.CustomPagination',
     'PAGE_SIZE': 100,
     'DEFAULT_THROTTLE_CLASSES': (
         'rest_framework.throttling.AnonRateThrottle',
