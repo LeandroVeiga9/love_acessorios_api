@@ -14,6 +14,8 @@ from pathlib import Path
 
 import os
 
+from datetime import timedelta
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -41,7 +43,8 @@ INSTALLED_APPS = [
   'django.contrib.staticfiles',
   'rest_framework',
   'api',
-  'drf_yasg'
+  'drf_yasg',
+  'djoser'
 ]
 
 MIDDLEWARE = [
@@ -85,25 +88,72 @@ DATABASES = {
   }
 }
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    # 'DEFAULT_PAGINATION_CLASS': 'api.pagination.customPagination.CustomPagination',
+    'PAGE_SIZE': 100,
+    'DEFAULT_THROTTLE_CLASSES': (
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+    ),
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '150/minute',
+        'user': '200/minute'
+    },
+    'DEFAULT_RENDERER_CLASSES': ('rest_framework.renderers.JSONRenderer',)
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=3),
+    'BLACKLIST_AFTER_ROTATION': False,
+    'SIGNING_KEY': os.environ.get('SECRET_KEY_JWT', 'INSECURE'),
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_TOKEN_CLASSES': (
+        'rest_framework_simplejwt.tokens.AccessToken',
+    ),
+    'ROTATE_REFRESH_TOKENS': True
+}
+
+DJOSER = {
+    'LOGIN_FIELD': 'email',
+    'USER_CREATE_PASSWORD_RETYPE': True,
+    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': 'email/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
+    'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
+    'USERNAME_RESET_SHOW_EMAIL_NOT_FOUND': True,
+    'SERIALIZERS': {
+        'user_create': 'api.serializers.UserSerializer',
+        'user': 'api.serializers.UserSerializer',
+        'current_user': 'api.serializers.UserCreateSerializer',
+        'user_delete': 'djoser.serializers.UserDeleteSerializer',
+    },
+    'EMAIL': {
+        'password_reset': 'core.email.ResetPassword',
+        'username_reset': 'core.email.ResetEmail'
+    }
+}
+
+AUTH_USER_MODEL = 'api.UserAccount'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-  {
-    'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-  },
-  {
-    'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-  },
-  {
-    'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-  },
-  {
-    'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-  },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 6,
+        }
+    },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/

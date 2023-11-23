@@ -5,7 +5,12 @@ from django.urls import path
 
 router = SimpleRouter()
 
+from .views import register_view, login_view
+
+
 urlpatterns = [
+  path('login/', login_view, name='login'),
+  path('register/', register_view, name='register')
 ]
 
 urlpatterns += staticfiles_urlpatterns()
