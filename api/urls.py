@@ -3,12 +3,13 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path
 
 from .views import register_view, login_view
-from .views import UsersViewSet, ProductsViewSet, CategoriesViewSet
+from .views import UsersViewSet, ProductsViewSet, CategoriesViewSet, VariantsViewSet
 
 router = SimpleRouter()
 router.register('users', UsersViewSet)
 router.register('products', ProductsViewSet)
 router.register('categories', CategoriesViewSet)
+router.register('variants', VariantsViewSet)
 
 urlpatterns = [
   path('login/', login_view, name='login'),

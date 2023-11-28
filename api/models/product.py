@@ -17,10 +17,8 @@ def get_file_path(instance, filename):
 
 class Product(Base):
   name = models.CharField(max_length=255)
-  price_in_cents = models.IntegerField()
+  description = models.CharField(max_length=255, default=None, blank=True, null=True)
   quantity = models.IntegerField(default=0)
-  image = models.ImageField(default=None, null=True, blank=True, upload_to=get_file_path)
-  thumbnail = models.ImageField(default=None, blank=True, null=True , editable=False)
   category = models.ForeignKey('api.Category', on_delete=models.SET_NULL, default=None, blank=True, null=True)
   
   def save(self, *args ,**kwargs):
