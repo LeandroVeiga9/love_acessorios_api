@@ -3,13 +3,10 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 
 from django.contrib.auth import authenticate
-from drf_yasg import openapi
 
-from ..serializers import UserSerializer, UserLoginSerializer
+from ..serializers import UserLoginSerializer
 
 from ..models import UserAccount
-
-import re
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -31,28 +28,28 @@ def login_view(request):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register_view(request):
-    data = request.data
-    data['is_staff'] = False
-    
-    user_exists = UserAccount.objects.filter(email=data['email']).exists()
-    
-    if user_exists:
-      return Response([['This email is already in use.']], status=422)
+  data = request.data
+  data['is_staff'] = False
+  
+  user_exists = UserAccount.objects.filter(email=data['email']).exists()
+  
+  if user_exists:
+    return Response([['This email is already in use.']], status=422)
 
-    serializer = UserLoginSerializer(data=data)
-    if serializer.is_valid():
-        user = serializer.save()
+  serializer = UserLoginSerializer(data=data)
+  if serializer.is_valid():
+    user = serializer.save()
 
-        serializer_user = UserLoginSerializer(user, context={'request': request}).data
-        return Response({**serializer_user}, status=201)
-    else:
-        return Response(serializer.errors, status=404)
+    serializer_user = UserLoginSerializer(user, context={'request': request}).data
+    return Response({**serializer_user}, status=201)
+  else:
+    return Response(serializer.errors, status=404)
 
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def verify_email(request):
-    user_exists = UserAccount.objects.filter(email=request.data.get('email')).exists()
-    return Response({'available_email': not user_exists}, status=200)
+  user_exists = UserAccount.objects.filter(email=request.data.get('email')).exists()
+  return Response({'available_email': not user_exists}, status=200)
 
     
