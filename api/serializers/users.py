@@ -14,7 +14,7 @@ class UserSerializer(UserCreateSerializer):
     fields = (
       'id',
       'thumbnail', 'email', 'first_name', 'last_name', 'password', 'profile_image', 'profile_image_url',
-      'is_active', 'created_at', 'updated_at', 'is_staff'
+      'is_active', 'created_at', 'updated_at', 'is_staff', 'phone_number'
     )
 
 class UserLoginSerializer(UserSerializer):
@@ -25,7 +25,7 @@ class UserLoginSerializer(UserSerializer):
     fields = (
       'id',
       'thumbnail', 'email', 'first_name', 'last_name', 'password', 'profile_image', 'profile_image_url',
-      'is_active', 'created_at', 'updated_at', 'is_staff', 'token'
+      'is_active', 'created_at', 'updated_at', 'is_staff', 'phone_number', 'token'
     )
 
   def getToken(self, ownerObj):
