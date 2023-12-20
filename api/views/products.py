@@ -15,6 +15,9 @@ class ProductsViewSet(viewsets.ModelViewSet):
     if 'category_id' in request.query_params:
       products = Product.objects.filter(category_id = request.query_params['category_id'])
     
+    if 'name' in request.query_params:
+      products = products.filter(name__contains = request.query_params['name'])
+    
     page = paginator.paginate_queryset(products, request)
     serializer = ProductsSerializer(page, many=True, context={'request': self.request})
     return paginator.get_paginated_response(serializer.data)
