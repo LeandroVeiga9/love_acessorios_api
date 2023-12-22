@@ -4,8 +4,8 @@ from .base import Base
 from .product import Product
 
 class Cart(Base):
-  user = models.ForeignKey('api.UserAccount', on_delete=models.CASCADE, default=None, blank=True, null=True)
-  products = models.ManyToManyField(Product)
+  user = models.ForeignKey('api.UserAccount', on_delete=models.SET_NULL, default=None, blank=True, null=True)
+  total_price = models.IntegerField(default=0)
  
 
   class Meta:

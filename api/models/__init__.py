@@ -4,3 +4,4 @@ from .category import Category
 from .product import Product
 from .variant import Variant
 from .cart import Cart
+from .cart_item import CartItem

@@ -3,3 +3,4 @@ from .categories import CategoriesSerializer
 from .products import ProductsSerializer
 from .variants import VariantsSerializer
 from .carts import CartsSerializer
+from .cart_items import CartItemsSerializer
