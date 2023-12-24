@@ -7,4 +7,4 @@ class VariantsSerializer(serializers.ModelSerializer):
   
   class Meta:
     model = Variant
-    fields = ('id', 'quantity', 'price_in_cents', 'product_id', 'created_at', 'updated_at')
+    fields = ('id', 'name', 'quantity', 'price_in_cents', 'product_id', 'created_at', 'updated_at')

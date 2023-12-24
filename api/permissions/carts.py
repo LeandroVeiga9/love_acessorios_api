@@ -15,4 +15,4 @@ class CartsPermissions(permissions.BasePermission):
           return True
         return False
 
-    return False
+    return True

@@ -3,8 +3,8 @@ from .base import Base
 
 class CartItem(Base):
   price_in_cents = models.IntegerField(default=0)
-  quantity = models.IntegerField(default=0)
-  product = models.ForeignKey('api.Product', on_delete=models.SET_NULL, default=None, blank=True, null=True)
+  quantity = models.IntegerField(default=1)
+  variant = models.ForeignKey('api.Variant', on_delete=models.SET_NULL, default=None, blank=True, null=True)
   cart = models.ForeignKey('api.Cart', on_delete=models.CASCADE)
 
   class Meta:
