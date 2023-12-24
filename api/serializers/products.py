@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from ..models import Product, Variant
-from .variants import VariantsSerializer
 
 class ProductsSerializer(serializers.ModelSerializer):
   category_id = serializers.IntegerField()
