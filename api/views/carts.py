@@ -37,17 +37,22 @@ class CartsViewSet(viewsets.ModelViewSet):
   
   @action(detail=True, methods=['post'])
   def add_item(self, request, pk=None):
-    # improve this function to sum the quantity of the variant is already on the cart
     cart = self.get_object()
     
     try:
       variant = Variant.objects.get(pk=request.data['variant_id'])
-      CartItem(
-        price_in_cents=variant.price_in_cents,
-        variant_id=variant.id,
-        quantity=request.data['quantity'],
-        cart_id=cart.id
-      ).save()
+      cart_item = CartItem.objects.filter(variant_id=variant.id, cart_id=cart.id)[0]
+      
+      if cart_item:
+        cart_item.quantity = cart_item.quantity + request.data['quantity']
+        cart_item.save()
+      else:
+        CartItem(
+          price_in_cents=variant.price_in_cents,
+          variant_id=variant.id,
+          quantity=request.data['quantity'],
+          cart_id=cart.id
+        ).save()
     except:
       message = f"Variant with id {request.data['variant_id']} doesn't exists"
       return Response({"message": message}, status=400)

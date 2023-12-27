@@ -44,7 +44,6 @@ class Variant(Base):
       data_img.close()
 
     super(Variant , self).save(*args , **kwargs)
-    print('aqui')
 
   class Meta:
     verbose_name = 'Variant'
