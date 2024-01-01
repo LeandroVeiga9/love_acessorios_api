@@ -16,7 +16,7 @@ class ProductsSerializer(serializers.ModelSerializer):
     if variants:
       prices = [variant.price_in_cents for variant in variants]
       min_price = min(prices)
-      id = variants.get(price_in_cents = min_price).id
+      id = variants.filter(price_in_cents = min_price).first().id
     else:
       id = None
   

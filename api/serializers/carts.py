@@ -9,7 +9,7 @@ class CartsSerializer(serializers.ModelSerializer):
   
   class Meta:
     model = Cart
-    fields = ('id', 'user_id', 'cart_items', 'created_at', 'updated_at')
+    fields = ('id', 'user_id', 'status',  'cart_items', 'created_at', 'updated_at')
 
   
   def getCartItems(self, instance):
